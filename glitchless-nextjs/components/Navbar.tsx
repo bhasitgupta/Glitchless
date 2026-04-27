@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useDevMode } from "@/context/DevModeContext";
 import { useTheme } from "@/context/ThemeContext";
@@ -24,13 +25,17 @@ export default function Navbar() {
   }, [toggleDevMode]);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 bg-transparent backdrop-blur-[8px] border-b border-[rgba(255,255,255,0.05)] z-[1000] py-4">
+    <nav className="fixed top-0 left-0 right-0 bg-transparent backdrop-blur-[8px] border-b border-[rgba(255,255,255,0.05)] z-[1000] py-2">
       <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-2 text-2xl font-bold no-underline">
-          <span className="font-black text-4xl inline-block bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,242,255,0.5)] hover:drop-shadow-[0_0_25px_rgba(0,242,255,0.8)] transition-all">
-            G
-          </span>
-          <span className="font-bold text-2xl bg-gradient-to-r from-white via-sky-200 to-cyan-400 bg-clip-text text-transparent">
+        <Link href="/" className="flex items-center gap-2 no-underline">
+          <Image
+            src="/logo.svg"
+            alt="Glitchless Logo"
+            width={32}
+            height={32}
+            className="drop-shadow-[0_0_15px_rgba(0,242,255,0.5)] hover:drop-shadow-[0_0_25px_rgba(0,242,255,0.8)] transition-all"
+          />
+          <span className="font-bold text-lg bg-gradient-to-r from-white via-sky-200 to-cyan-400 bg-clip-text text-transparent">
             Glitchless
           </span>
         </Link>

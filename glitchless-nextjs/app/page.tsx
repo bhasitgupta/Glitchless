@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import HolographicCard from "@/components/HolographicCard";
+import KineticTextReveal from "@/components/KineticTextReveal";
+import WordReveal from "@/components/WordReveal";
 
 type DemoType = "analysis" | "plain" | "autofix" | "cicd" | "howitworks" | "service" | "featuresPopup" | null;
 type HowItWorksStep = "upload" | "ai" | "fix" | "deploy" | null;
@@ -44,17 +47,34 @@ export default function HomePage() {
       {/* Hero Section */}
       <main className="min-h-screen pt-24">
         <div className="max-w-[1200px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="animate-[fadeInUp_0.8s_ease-out]">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Stop squinting at logs.
-              <br />
-              <span className="hologram-text">Start shipping code.</span>
-            </h1>
-            <p className="text-xl text-[var(--secondary)] mb-8 max-w-[500px]">
-              Glitchless turns deployment nightmares into one-click resolutions.
-              AI-powered log analysis that actually fixes your bugs.
-            </p>
-            <div className="flex gap-4 flex-wrap">
+          <motion.div 
+            className="animate-[fadeInUp_0.8s_ease-out]"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="mb-6 leading-tight">
+              <KineticTextReveal 
+                text="Stop squinting at logs." 
+                className="text-4xl md:text-6xl font-bold" 
+              />
+              <KineticTextReveal 
+                text="Start shipping code." 
+                className="text-4xl md:text-6xl font-bold hologram-text mt-2" 
+                staggerDelay={0.03}
+              />
+            </div>
+            <WordReveal 
+              text="Glitchless turns deployment nightmares into one-click resolutions. AI-powered log analysis that actually fixes your bugs."
+              className="text-xl text-[var(--secondary)] mb-8 max-w-[500px]"
+              delay={0.2}
+            />
+            <motion.div 
+              className="flex gap-4 flex-wrap"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
               {isLoggedIn ? (
                 <Link
                   href="/dashboard"
@@ -76,11 +96,16 @@ export default function HomePage() {
               >
                 See How It Works
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Hero Terminal */}
-          <HolographicCard intensity="high" className="animate-[fadeInUp_0.8s_ease-out_0.2s_backwards]">
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <HolographicCard intensity="high" className="animate-[fadeInUp_0.8s_ease-out_0.2s_backwards]">
             <div className="bg-[rgba(0,0,0,0.3)] border border-[var(--border-color)] rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
               <div className="bg-[rgba(255,255,255,0.03)] p-4 flex items-center gap-4 border-b border-[var(--glass-border)]">
                 <div className="flex gap-2">
@@ -128,11 +153,18 @@ export default function HomePage() {
             </div>
           </div>
           </HolographicCard>
+            </motion.div>
         </div>
       </main>
 
       {/* Animated Section Divider */}
-      <div className="relative h-[300px] overflow-hidden">
+      <motion.div 
+        className="relative h-[300px] overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* Centered Giant Glitchless Logo with Spin */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="flex flex-col items-center gap-4 animate-[spinLogo_12s_linear_infinite]" style={{ perspective: '1000px' }}>
@@ -144,10 +176,17 @@ export default function HomePage() {
             </span>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Features Section */}
-      <section id="features" className="py-24">
+      <motion.section 
+        id="features" 
+        className="py-24"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-[1200px] mx-auto px-8">
           {/* Rotating Hologram Title */}
           <div className="text-center mb-12">
@@ -162,16 +201,11 @@ export default function HomePage() {
                   perspective: '1000px',
                 }}
               >
-                {/* Main rotating text with gradient effect */}
-                <h2 
-                  className="text-4xl md:text-5xl font-black bg-gradient-to-r from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(0,242,255,0.5)] transition-all duration-500 group-hover:scale-105"
-                  style={{
-                    animation: 'hologramRotate 8s linear infinite',
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  Why Developers Love Glitchless
-                </h2>
+                <KineticTextReveal 
+                  text="Why Developers Love Glitchless"
+                  className="text-4xl md:text-5xl font-black bg-gradient-to-r from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_30px_rgba(0,242,255,0.5)] transition-all duration-500 group-hover:scale-105 inline-block"
+                  staggerDelay={0.03}
+                />
                 
                 {/* Gradient reflection layer */}
                 <div 
@@ -204,87 +238,126 @@ export default function HomePage() {
               { icon: "🎯", title: "Plain English", desc: "Technical jargon translated into human-readable explanations anyone can understand.", demo: "plain" },
               { icon: "⚡", title: "Auto-Fix", desc: "One-click fixes with detailed diff views. Copy, paste, and deploy.", demo: "autofix" },
               { icon: "🔄", title: "CI/CD Integration", desc: "Connect your pipeline and prevent glitches before they reach production.", demo: "cicd" },
-            ].map((feature) => (
-              <HolographicCard 
-                key={feature.title} 
-                intensity="medium" 
-                className="p-8 transition-all duration-300 cursor-pointer hover:scale-105"
-                onClick={() => setActiveDemo(feature.demo as DemoType)}
+            ].map((feature, idx) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
               >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-semibold mb-2 hologram-text">{feature.title}</h3>
-                <p className="text-[var(--secondary)]">{feature.desc}</p>
-                <p className="text-[var(--accent)] text-sm mt-4 font-medium">Click to try demo →</p>
-              </HolographicCard>
+                <HolographicCard 
+                  intensity="medium" 
+                  className="p-8 transition-all duration-300 cursor-pointer hover:scale-105"
+                  onClick={() => setActiveDemo(feature.demo as DemoType)}
+                >
+                  <div className="text-4xl mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2 hologram-text">{feature.title}</h3>
+                  <p className="text-[var(--secondary)]">{feature.desc}</p>
+                  <p className="text-[var(--accent)] text-sm mt-4 font-medium">Click to try demo →</p>
+                </HolographicCard>
+              </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How It Works */}
-      <section id="how-it-works" className="py-24">
+      <motion.section 
+        id="how-it-works" 
+        className="py-24"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="glass-card p-12">
-            <h2 className="text-4xl font-bold text-center mb-4">
-              How Glitchless Works
-            </h2>
-            <p className="text-center text-[var(--secondary)] mb-12">
-              Click any step to see it in action
-            </p>
+            <KineticTextReveal 
+              text="How Glitchless Works"
+              className="text-4xl font-bold text-center mb-4 block"
+            />
+            <WordReveal 
+              text="Click any step to see it in action"
+              className="text-center text-[var(--secondary)] mb-12"
+            />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {[
                 { num: "1", title: "Upload Your Logs", desc: "Drag and drop your log files or paste a GitHub repository URL", step: "upload" },
                 { num: "2", title: "AI Analysis", desc: "Our AI scans and identifies the exact cause of your deployment failure", step: "ai" },
                 { num: "3", title: "Get the Fix", desc: "Receive a clear, actionable solution with code diffs and explanations", step: "fix" },
                 { num: "4", title: "Deploy", desc: "Apply the fix and ship your code with confidence", step: "deploy" },
-              ].map((step) => (
-                <div 
-                  key={step.num} 
+              ].map((step, idx) => (
+                <motion.div 
+                  key={step.num}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
                   className="text-center cursor-pointer group"
                   onClick={() => {
                     setHowItWorksStep(step.step as HowItWorksStep);
                     setActiveDemo("howitworks");
                   }}
                 >
-                  <div className="w-16 h-16 bg-gradient-to-br from-[var(--accent)] to-[#00C8D4] rounded-full flex items-center justify-center text-2xl font-bold text-[var(--primary)] mx-auto mb-4 transition-all group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(0,242,255,0.5)]">
+                  <motion.div 
+                    className="w-16 h-16 bg-gradient-to-br from-[var(--accent)] to-[#00C8D4] rounded-full flex items-center justify-center text-2xl font-bold text-[var(--primary)] mx-auto mb-4 transition-all group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(0,242,255,0.5)]"
+                    whileHover={{ scale: 1.15 }}
+                  >
                     {step.num}
-                  </div>
+                  </motion.div>
                   <h3 className="mb-2 font-semibold group-hover:text-[var(--accent)] transition-colors">{step.title}</h3>
                   <p className="text-[var(--secondary)]">{step.desc}</p>
                   <p className="text-[var(--accent)] text-xs mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Click to try →</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Services Section */}
-      <section id="services" className="py-24 bg-[rgba(0,0,0,0.2)]">
+      <motion.section 
+        id="services" 
+        className="py-24 bg-[rgba(0,0,0,0.2)]"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: false, amount: 0.3 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="max-w-[1200px] mx-auto px-8">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Integrations & Services</h2>
-            <p className="text-[var(--secondary)] text-lg max-w-2xl mx-auto">
-              Connect your favorite tools and let Glitchless monitor them 24/7. 
-              Click any service to connect or manage it.
-            </p>
+            <KineticTextReveal 
+              text="Integrations & Services"
+              className="text-4xl font-bold mb-4 block"
+            />
+            <WordReveal 
+              text="Connect your favorite tools and let Glitchless monitor them 24/7. Click any service to connect or manage it."
+              className="text-[var(--secondary)] text-lg max-w-2xl mx-auto"
+            />
           </div>
           
           {/* Live Service Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {Object.values(services).map((svc) => (
-              <HolographicCard 
-                key={svc.name} 
-                intensity={svc.status === "connected" ? "medium" : "low"} 
-                className="p-6 cursor-pointer group transition-all hover:scale-[1.02]"
-                onClick={() => {
-                  setActiveService(svc.name);
-                  setActiveDemo("service");
-                }}
+            {Object.values(services).map((svc, idx) => (
+              <motion.div
+                key={svc.name}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div 
+                <HolographicCard 
+                  intensity={svc.status === "connected" ? "medium" : "low"} 
+                  className="p-6 cursor-pointer group transition-all hover:scale-[1.02]"
+                  onClick={() => {
+                    setActiveService(svc.name);
+                    setActiveDemo("service");
+                  }}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div 
                       className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl font-bold transition-transform group-hover:scale-110 ${
                         svc.status === "connected" 
                           ? "bg-[var(--accent)]/20 text-[var(--accent)]" 
@@ -295,7 +368,19 @@ export default function HomePage() {
                     >
                       {svc.status === "connecting" ? (
                         <span style={{ animation: 'smoothSpin 1s linear infinite', display: 'inline-block' }}>⟳</span>
-                      ) : svc.name === "GitHub" ? "🔗" : svc.name === "Vercel" ? "▲" : svc.name === "Slack" ? "💬" : svc.name === "GitLab" ? "🦊" : svc.name === "Netlify" ? "🌐" : "🎮"}
+                      ) : svc.name === "GitHub" ? (
+                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                      ) : svc.name === "Vercel" ? (
+                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
+                      ) : svc.name === "Slack" ? (
+                        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.523-2.522v-2.522h2.523zM15.165 17.688a2.527 2.527 0 0 1-2.523-2.523 2.526 2.526 0 0 1 2.523-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                      ) : svc.name === "GitLab" ? (
+                        <svg className="w-8 h-8 text-[#FC6D26]" viewBox="0 0 24 24" fill="currentColor"><path d="M23.955 13.587l-1.342-4.135-2.664-8.189a1.056 1.056 0 00-2.009 0L15.276 9.45H8.724L6.06 1.263a1.056 1.056 0 00-2.009 0L1.386 9.45.044 13.587c-.195.597.027 1.264.536 1.636l11.42 8.307 11.42-8.307c.508-.372.73-1.039.535-1.636z"/></svg>
+                      ) : svc.name === "Netlify" ? (
+                        <svg className="w-8 h-8 text-[#00C7B7]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.067 8.012l-4.526 4.316-4.582-4.37.493-4.662L12.502 0l4.565 3.33.003 4.681zM11.954 13.62L6.166 8.09 0 11.666l11.954 12.333V13.62zm1.09.006v10.37L24 11.666l-5.187-3.167-5.768 5.127z"/></svg>
+                      ) : (
+                        <svg className="w-8 h-8 text-[#5865F2]" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                      )}
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">{svc.name}</h3>
@@ -348,30 +433,44 @@ export default function HomePage() {
                   </button>
                 )}
               </HolographicCard>
+              </motion.div>
             ))}
           </div>
 
           {/* Connection Flow */}
           <div className="glass-card p-8 text-center">
-            <h3 className="text-2xl font-semibold mb-6">Connect in 3 Simple Steps</h3>
+            <KineticTextReveal 
+              text="Connect in 3 Simple Steps"
+              className="text-2xl font-semibold mb-6 block"
+            />
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               {[
                 { step: "1", title: "Choose Service", desc: "Select from 20+ integrations" },
                 { step: "2", title: "Authenticate", desc: "Secure OAuth connection" },
                 { step: "3", title: "Monitor", desc: "Glitchless watches 24/7" },
               ].map((s, i) => (
-                <div key={s.step} className="flex items-center gap-4">
+                <motion.div 
+                  key={s.step} 
+                  className="flex items-center gap-4"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                >
                   <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[var(--accent)] to-[#00C8D4] rounded-full flex items-center justify-center text-2xl font-bold text-[var(--primary)] mx-auto mb-2">
+                    <motion.div 
+                      className="w-16 h-16 bg-gradient-to-br from-[var(--accent)] to-[#00C8D4] rounded-full flex items-center justify-center text-2xl font-bold text-[var(--primary)] mx-auto mb-2"
+                      whileHover={{ scale: 1.1 }}
+                    >
                       {s.step}
-                    </div>
+                    </motion.div>
                     <h4 className="font-semibold">{s.title}</h4>
                     <p className="text-sm text-[var(--secondary)]">{s.desc}</p>
                   </div>
                   {i < 2 && (
                     <div className="hidden md:block text-3xl text-[var(--accent)]">→</div>
                   )}
-                </div>
+                </motion.div>
               ))}
             </div>
             <div className="mt-8">
@@ -384,7 +483,7 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Demo Modal */}
       {activeDemo && (
@@ -557,7 +656,19 @@ export default function HomePage() {
                     <>
                       <div className="flex items-center gap-4 mb-6">
                         <div className="w-16 h-16 bg-[var(--accent)]/20 rounded-xl flex items-center justify-center text-3xl">
-                          {activeService === "GitHub" ? "🔗" : activeService === "Vercel" ? "▲" : activeService === "Slack" ? "💬" : activeService === "GitLab" ? "🦊" : activeService === "Netlify" ? "🌐" : "🎮"}
+                          {activeService === "GitHub" ? (
+                            <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                          ) : activeService === "Vercel" ? (
+                            <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M24 22.525H0l12-21.05 12 21.05z"/></svg>
+                          ) : activeService === "Slack" ? (
+                            <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor"><path d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 5.042a2.528 2.528 0 0 1-2.521-2.52A2.528 2.528 0 0 1 8.834 0a2.528 2.528 0 0 1 2.521 2.522v2.52H8.834zM8.834 6.313a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 8.834a2.528 2.528 0 0 1 2.522-2.521h6.312zM18.956 8.834a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 8.834a2.528 2.528 0 0 1-2.522 2.521h-2.522V8.834zM17.688 8.834a2.528 2.528 0 0 1-2.523 2.521 2.527 2.527 0 0 1-2.52-2.521V2.522A2.527 2.527 0 0 1 15.165 0a2.528 2.528 0 0 1 2.523 2.522v6.312zM15.165 18.956a2.528 2.528 0 0 1 2.523 2.522A2.528 2.528 0 0 1 15.165 24a2.527 2.527 0 0 1-2.523-2.522v-2.522h2.523zM15.165 17.688a2.527 2.527 0 0 1-2.523-2.523 2.526 2.526 0 0 1 2.523-2.52h6.313A2.527 2.527 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.523h-6.313z"/></svg>
+                          ) : activeService === "GitLab" ? (
+                            <svg className="w-10 h-10 text-[#FC6D26]" viewBox="0 0 24 24" fill="currentColor"><path d="M23.955 13.587l-1.342-4.135-2.664-8.189a1.056 1.056 0 00-2.009 0L15.276 9.45H8.724L6.06 1.263a1.056 1.056 0 00-2.009 0L1.386 9.45.044 13.587c-.195.597.027 1.264.536 1.636l11.42 8.307 11.42-8.307c.508-.372.73-1.039.535-1.636z"/></svg>
+                          ) : activeService === "Netlify" ? (
+                            <svg className="w-10 h-10 text-[#00C7B7]" viewBox="0 0 24 24" fill="currentColor"><path d="M17.067 8.012l-4.526 4.316-4.582-4.37.493-4.662L12.502 0l4.565 3.33.003 4.681zM11.954 13.62L6.166 8.09 0 11.666l11.954 12.333V13.62zm1.09.006v10.37L24 11.666l-5.187-3.167-5.768 5.127z"/></svg>
+                          ) : (
+                            <svg className="w-10 h-10 text-[#5865F2]" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                          )}
                         </div>
                         <div>
                           <h3 className="text-2xl font-bold">{activeService}</h3>
