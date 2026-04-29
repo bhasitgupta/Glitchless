@@ -6,7 +6,7 @@ import { useDevMode } from "@/context/DevModeContext";
 type TabId = "console" | "network" | "state" | "perf";
 
 export default function DevModePanel() {
-  const { isDevMode, showPanel, togglePanel, logs, clearLogs, networkRequests, clearNetwork } = useDevMode();
+  const { isDevMode, toggleDevMode, showPanel, togglePanel, logs, clearLogs, networkRequests, clearNetwork } = useDevMode();
   const [activeTab, setActiveTab] = useState<TabId>("console");
   const [selectedLog, setSelectedLog] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -103,7 +103,7 @@ export default function DevModePanel() {
   return (
     <div className={`fixed bottom-6 right-6 z-[9999] flex flex-col
                     transition-all duration-300 ease-out
-                    ${isMinimized ? "w-80 h-12" : "w-[520px]"}`}
+                    ${isMinimized ? "w-[calc(100vw-3rem)] sm:w-80 h-12" : "w-[calc(100vw-3rem)] sm:w-[520px]"}`}
          style={{ maxHeight: isMinimized ? "48px" : "75vh" }}>
 
       {/* Title Bar */}
@@ -111,9 +111,9 @@ export default function DevModePanel() {
                       bg-black/50 backdrop-blur-md border border-b-0 border-[rgba(0,242,255,0.2)]
                       select-none shrink-0">
         <div className="flex gap-1.5">
-          <button onClick={togglePanel} className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors" title="Close" />
-          <button onClick={() => setIsMinimized(!isMinimized)} className="w-3 h-3 rounded-full bg-amber-500/80 hover:bg-amber-500 transition-colors" title={isMinimized ? "Expand" : "Minimize"} />
-          <button onClick={() => { clearLogs(); clearNetwork(); }} className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors" title="Clear Logs" />
+          <button onClick={toggleDevMode} className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors" title="Close Dev Mode" />
+          <button onClick={() => setIsMinimized(!isMinimized)} className="w-3 h-3 rounded-full bg-amber-500/80 hover:bg-amber-500 transition-colors" title={isMinimized ? "Expand" : "Small Size"} />
+          <button onClick={togglePanel} className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors" title="Minimize Panel" />
         </div>
         <span className="text-xs font-semibold text-[#00F2FF] tracking-wider ml-1">DEVTOOLS</span>
         <span className="text-[10px] text-[#555] ml-1">Glitchless</span>
