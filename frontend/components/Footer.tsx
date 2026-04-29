@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -6,9 +7,7 @@ export default function Footer() {
       <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center flex-wrap gap-8">
         <div>
           <div className="flex items-center gap-2 text-xl font-bold">
-            <span className="hologram-text hologram-glow font-black text-2xl inline-block">
-              G
-            </span>
+            <Image src="/logo.png" width={24} height={24} alt="Glitchless Logo" className="drop-shadow-[0_0_10px_rgba(0,242,255,0.5)]" />
             <span className="font-bold">Glitchless</span>
           </div>
           <p className="text-[var(--secondary)] mt-2">Turn chaotic logs into clear success</p>

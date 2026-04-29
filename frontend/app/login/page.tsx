@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import AnimatedBackground from "@/components/AnimatedBackground";
@@ -44,9 +45,7 @@ export default function LoginPage() {
         href="/"
         className="fixed top-8 left-8 text-2xl font-bold text-[#c9d1d9] no-underline z-[100] transition-all hover:text-[#58a6ff] hover:scale-105"
       >
-        <span className="font-black text-4xl inline-block bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(0,242,255,0.5)]">
-          G
-        </span>
+        <Image src="/logo.png" width={32} height={32} alt="Glitchless Logo" className="drop-shadow-[0_0_15px_rgba(0,242,255,0.5)] inline-block align-middle" />
         <span className="font-bold bg-gradient-to-r from-white via-sky-200 to-cyan-400 bg-clip-text text-transparent">Glitchless</span>
       </Link>
       <Link
@@ -59,8 +58,8 @@ export default function LoginPage() {
         <div className="w-full max-w-[1200px] flex flex-col md:flex-row gap-12 items-center">
           {/* Animated Side */}
           <div className="hidden md:flex flex-col items-center justify-center w-[300px]">
-            <div className="text-[8rem] font-black bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent animate-[logoFloat_3s_ease-in-out_infinite] drop-shadow-[0_0_60px_rgba(0,242,255,0.6)] filter brightness-110">
-              G
+            <div className="flex items-center justify-center">
+              <Image src="/logo.png" width={120} height={120} alt="Glitchless Logo" className="animate-[logoFloat_3s_ease-in-out_infinite] drop-shadow-[0_0_60px_rgba(0,242,255,0.6)]" />
             </div>
             <div className="relative w-[200px] h-[200px]">
               <div className="absolute w-full h-full border-2 border-[rgba(0,242,255,0.3)] rounded-full animate-[rotate_8s_linear_infinite] shadow-[0_0_15px_rgba(0,242,255,0.3)]"></div>

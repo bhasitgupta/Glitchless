@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import DashboardNav from "@/components/DashboardNav";
@@ -434,9 +435,7 @@ export default function DashboardPage() {
               />
               {/* Center logo */}
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-black text-4xl bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent">
-                  G
-                </span>
+                <Image src="/logo.png" width={48} height={48} alt="Glitchless Logo" className="drop-shadow-[0_0_15px_rgba(0,242,255,0.6)]" />
               </div>
             </div>
 
