@@ -1,38 +1,48 @@
 from PIL import Image
+import colorsys
 
 input_file = r"c:\Users\Bhasit Gupta\Desktop\Logo.png"
 output_file = r"c:\Users\Bhasit Gupta\Desktop\Glitchless-main\frontend\public\logo.png"
 
 img = Image.open(input_file).convert("RGBA")
-data = img.getdata()
+pixels = img.load()
+w, h = img.size
 
-new_data = []
-for r, g, b, a in data:
-    # If the pixel is very bright/white, make it fully transparent
-    if r > 200 and g > 200 and b > 200:
-        new_data.append((255, 255, 255, 0))
-    else:
-        # Check if the pixel has low saturation (grey/whiteish) and high lightness
-        # A simple approximation: if max(rgb) - min(rgb) is small and average is high
-        avg = (r + g + b) / 3
-        diff = max(r, g, b) - min(r, g, b)
-        if avg > 180 and diff < 30:
-            new_data.append((255, 255, 255, 0))
-        elif a > 0 and r > 230 and g > 230 and b > 230:
-            new_data.append((255, 255, 255, 0))
-        else:
-            # Maybe the semi-transparent white background has low alpha?
-            # If it's mostly white with low alpha, make it 0.
-            if a > 0 and a < 255 and avg > 200:
-                 new_data.append((255, 255, 255, 0))
-            else:
-                 new_data.append((r, g, b, a))
+for y in range(h):
+    for x in range(w):
+        r, g, b, a = pixels[x, y]
+        if a == 0:
+            continue
         
-img.putdata(new_data)
-# Let's crop the image to its actual content bounding box
+        # Convert to HSL to check saturation
+        r_n, g_n, b_n = r / 255.0, g / 255.0, b / 255.0
+        h_val, l_val, s_val = colorsys.rgb_to_hls(r_n, g_n, b_n)
+        
+        # Remove anything that is:
+        # 1. Very light with low saturation (white/near-white)
+        # 2. Has lightness > 0.92 (very bright regardless of hue)
+        if l_val > 0.92 and s_val < 0.15:
+            pixels[x, y] = (255, 255, 255, 0)
+        elif l_val > 0.96:
+            pixels[x, y] = (255, 255, 255, 0)
+        elif r > 240 and g > 240 and b > 240:
+            pixels[x, y] = (255, 255, 255, 0)
+
+# Crop to content bounding box
 bbox = img.getbbox()
 if bbox:
     img = img.crop(bbox)
 
 img.save(output_file, "PNG")
-print("Saved without any bright/white/translucent background")
+print(f"Saved. Final size: {img.size}")
+
+# Verify
+img2 = Image.open(output_file).convert("RGBA")
+pixels2 = img2.load()
+whites = 0
+for y in range(img2.height):
+    for x in range(img2.width):
+        r, g, b, a = pixels2[x, y]
+        if a > 0 and r > 220 and g > 220 and b > 220:
+            whites += 1
+print(f"Remaining white-ish visible pixels: {whites}")
