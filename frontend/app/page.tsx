@@ -114,13 +114,11 @@ export default function HomePage() {
                   <span className="w-3 h-3 rounded-full bg-[var(--warning)]"></span>
                   <span className="w-3 h-3 rounded-full bg-[var(--success)]"></span>
                 </div>
-                <span className="font-black text-2xl inline-block bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent">
-                  G
-                </span>
+                <Image src="/logo.png" width={24} height={24} alt="Glitchless Logo" className="drop-shadow-[0_0_10px_rgba(0,242,255,0.5)]" />
                 <span className="font-bold bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">Glitchless</span>
                 <span className="font-mono text-sm text-[var(--secondary)]">build.log</span>
               </div>
-            <div className="p-6 font-mono text-sm relative min-h-[250px]">
+            <div className="p-6 font-mono text-sm relative min-h-[250px] overflow-x-auto">
               {[
                 { time: "[10:23:45]", text: "npm ERR! code ERESOLVE", type: "error" },
                 { time: "[10:23:46]", text: "npm ERR! ERESOLVE unable to resolve dependency tree", type: "error" },
@@ -131,10 +129,10 @@ export default function HomePage() {
               ].map((line, i) => (
                 <div
                   key={i}
-                  className={`py-1 flex gap-2 opacity-0 animate-[slideIn_0.5s_ease-out_forwards]`}
+                  className={`py-1 flex gap-2 opacity-0 animate-[slideIn_0.5s_ease-out_forwards] whitespace-nowrap sm:whitespace-normal`}
                   style={{ animationDelay: `${0.5 + i * 0.5}s` }}
                 >
-                  <span className="text-[var(--secondary)] opacity-70">{line.time}</span>
+                  <span className="text-[var(--secondary)] opacity-70 shrink-0">{line.time}</span>
                   <span
                     className={
                       line.type === "error"
@@ -181,7 +179,7 @@ export default function HomePage() {
                 }}
               />
             </div>
-            <span className="text-6xl font-bold bg-gradient-to-r from-white via-sky-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(0,242,255,0.4)]">
+            <span className="text-4xl sm:text-6xl font-bold bg-gradient-to-r from-white via-sky-200 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_40px_rgba(0,242,255,0.4)]">
               Glitchless
             </span>
           </div>
@@ -252,6 +250,7 @@ export default function HomePage() {
             ].map((feature, idx) => (
               <motion.div
                 key={feature.title}
+                className="h-full"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: false, amount: 0.3 }}
@@ -259,12 +258,12 @@ export default function HomePage() {
               >
                 <HolographicCard 
                   intensity="medium" 
-                  className="p-8 transition-all duration-300 cursor-pointer hover:scale-105"
+                  className="p-8 transition-all duration-300 cursor-pointer hover:scale-105 h-full flex flex-col"
                   onClick={() => setActiveDemo(feature.demo as DemoType)}
                 >
                   <div className="text-4xl mb-4">{feature.icon}</div>
                   <h3 className="text-xl font-semibold mb-2 hologram-text">{feature.title}</h3>
-                  <p className="text-[var(--secondary)]">{feature.desc}</p>
+                  <p className="text-[var(--secondary)] flex-grow">{feature.desc}</p>
                   <p className="text-[var(--accent)] text-sm mt-4 font-medium">Click to try demo →</p>
                 </HolographicCard>
               </motion.div>
@@ -898,7 +897,7 @@ export default function HomePage() {
                     <div className="bg-black/50 rounded-lg p-4 font-mono text-sm">
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-2 h-2 bg-[var(--accent)] rounded-full animate-pulse"></div>
-                        <span className="font-black text-lg bg-gradient-to-br from-white via-sky-300 to-cyan-400 bg-clip-text text-transparent">G</span>
+                        <Image src="/logo.png" width={18} height={18} alt="Glitchless Logo" />
                         <span className="text-[var(--accent)]">AI analyzing logs...</span>
                       </div>
                       <p className="text-[var(--secondary)]">Scanning 1,247 lines of build output</p>
