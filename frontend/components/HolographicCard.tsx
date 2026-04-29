@@ -41,9 +41,9 @@ export default function HolographicCard({ children, className = "", intensity = 
           : {}
       }
     >
-      <div className="hologram-border"></div>
-      <div className="hologram-scanline"></div>
-      <div className="hologram-content">{children}</div>
+      <div className="hologram-border h-full"></div>
+      <div className="hologram-scanline h-full"></div>
+      <div className="hologram-content h-full flex flex-col">{children}</div>
     </div>
   );
 }
