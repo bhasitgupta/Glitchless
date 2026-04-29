@@ -5,12 +5,14 @@ import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useDevMode } from "@/context/DevModeContext";
 import { useTheme } from "@/context/ThemeContext";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const { isLoggedIn, logout } = useAuth();
   const { isDevMode, toggleDevMode } = useDevMode();
   const { theme, toggleTheme } = useTheme();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Keyboard shortcut: Ctrl+Shift+D to toggle dev mode
   useEffect(() => {
@@ -39,7 +41,9 @@ export default function Navbar() {
             Glitchless
           </span>
         </Link>
-        <div className="flex gap-6 items-center">
+        
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-6 items-center">
           <Link href="/" className="text-[var(--secondary)] no-underline transition-colors hover:text-[var(--accent)]">
             Home
           </Link>
@@ -86,7 +90,83 @@ export default function Navbar() {
             </button>
           ) : null}
         </div>
+
+        {/* Mobile Menu Toggle Button */}
+        <div className="md:hidden flex items-center gap-4">
+          <button
+            onClick={toggleDevMode}
+            className={`p-2 rounded-lg transition-all duration-300 ${isDevMode
+                ? "bg-[var(--accent)]/20 text-[var(--accent)] animate-pulse"
+                : "text-[var(--secondary)] hover:text-white hover:bg-[rgba(255,255,255,0.1)]"
+              }`}
+            title="Toggle Dev Mode"
+          >
+            🛠️
+          </button>
+          <button 
+            className="text-white p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isMobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-black/90 backdrop-blur-md border-b border-[rgba(255,255,255,0.05)] overflow-hidden"
+          >
+            <div className="flex flex-col px-8 py-6 gap-4">
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="text-[var(--secondary)] no-underline text-lg hover:text-[var(--accent)]">
+                Home
+              </Link>
+              {isLoggedIn && (
+                <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="text-[var(--secondary)] no-underline text-lg hover:text-[var(--accent)]">
+                  Dashboard
+                </Link>
+              )}
+              <Link href="/#features" onClick={() => setIsMobileMenuOpen(false)} className="text-[var(--secondary)] no-underline text-lg hover:text-[var(--accent)]">
+                Features
+              </Link>
+              <Link href="/#services" onClick={() => setIsMobileMenuOpen(false)} className="text-[var(--secondary)] no-underline text-lg hover:text-[var(--accent)]">
+                Services
+              </Link>
+              <Link href="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-[var(--secondary)] no-underline text-lg hover:text-[var(--accent)]">
+                About Us
+              </Link>
+              <Link
+                href="/#how-it-works"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="bg-gradient-to-br from-[var(--accent)] to-[#00C8D4] text-[var(--primary)] px-5 py-3 rounded-lg font-semibold text-center mt-2 no-underline"
+              >
+                How It Works
+              </Link>
+              {isLoggedIn ? (
+                <button
+                  onClick={() => {
+                    logout();
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="border border-[var(--glass-border)] text-white px-6 py-3 rounded-lg font-semibold mt-2 no-underline hover:border-[var(--accent)] hover:text-[var(--accent)] bg-transparent cursor-pointer"
+                >
+                  Logout
+                </button>
+              ) : null}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
