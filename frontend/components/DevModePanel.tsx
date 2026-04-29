@@ -111,9 +111,9 @@ export default function DevModePanel() {
                       bg-black/50 backdrop-blur-md border border-b-0 border-[rgba(0,242,255,0.2)]
                       select-none shrink-0">
         <div className="flex gap-1.5">
-          <button onClick={() => { clearLogs(); clearNetwork(); }} className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors" title="Clear" />
+          <button onClick={togglePanel} className="w-3 h-3 rounded-full bg-red-500/80 hover:bg-red-500 transition-colors" title="Close" />
           <button onClick={() => setIsMinimized(!isMinimized)} className="w-3 h-3 rounded-full bg-amber-500/80 hover:bg-amber-500 transition-colors" title={isMinimized ? "Expand" : "Minimize"} />
-          <button onClick={togglePanel} className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors" title="Close" />
+          <button onClick={() => { clearLogs(); clearNetwork(); }} className="w-3 h-3 rounded-full bg-emerald-500/80 hover:bg-emerald-500 transition-colors" title="Clear Logs" />
         </div>
         <span className="text-xs font-semibold text-[#00F2FF] tracking-wider ml-1">DEVTOOLS</span>
         <span className="text-[10px] text-[#555] ml-1">Glitchless</span>
